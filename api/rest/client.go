@@ -4,13 +4,16 @@ import (
 	"bytes"
 	"crypto/hmac"
 	"crypto/sha256"
+	"crypto/tls"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"github.com/amir-the-h/okex"
 	requests "github.com/amir-the-h/okex/requests/rest/public"
 	responses "github.com/amir-the-h/okex/responses/public_data"
+	"log"
 	"net/http"
+	"net/url"
 	"strings"
 	"time"
 )
@@ -41,6 +44,35 @@ func NewClient(apiKey, secretKey, passphrase string, baseURL okex.BaseURL, desti
 		baseURL:     baseURL,
 		destination: destination,
 		client:      http.DefaultClient,
+	}
+	c.Account = NewAccount(c)
+	c.SubAccount = NewSubAccount(c)
+	c.Trade = NewTrade(c)
+	c.Funding = NewFunding(c)
+	c.Market = NewMarket(c)
+	c.PublicData = NewPublicData(c)
+	c.TradeData = NewTradeData(c)
+	return c
+}
+
+// NewProxiedClient returns a pointer to a fresh ClientRest
+func NewProxiedClient(apiKey, secretKey, passphrase string, baseURL okex.BaseURL, destination okex.Destination, proxyUrl string) *ClientRest {
+	proxy, err := url.Parse(proxyUrl)
+	if err != nil {
+		log.Fatal(err)
+	}
+	tr := &http.Transport{
+		Proxy:           http.ProxyURL(proxy),
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+
+	c := &ClientRest{
+		apiKey:      apiKey,
+		secretKey:   []byte(secretKey),
+		passphrase:  passphrase,
+		baseURL:     baseURL,
+		destination: destination,
+		client:      &http.Client{Transport: tr},
 	}
 	c.Account = NewAccount(c)
 	c.SubAccount = NewSubAccount(c)

@@ -13,6 +13,8 @@ type (
 		CanDep      bool   `json:"canDep"`
 		CanWd       bool   `json:"canWd"`
 		CanInternal bool   `json:"canInternal"`
+		WdTickSz    string `json:"wdTickSz"`
+		WdQuota     string `json:"wdQuota"`
 	}
 	Balance struct {
 		Ccy       string `json:"ccy"`

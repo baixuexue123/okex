@@ -1,12 +1,10 @@
 package rest
 
 import (
-	"bytes"
 	"encoding/json"
 	"github.com/amir-the-h/okex"
 	requests "github.com/amir-the-h/okex/requests/rest/public"
 	responses "github.com/amir-the-h/okex/responses/public_data"
-	"io"
 	"net/http"
 )
 
@@ -151,14 +149,8 @@ func (c *PublicData) GetSystemTime() (response responses.GetSystemTime, err erro
 	if err != nil {
 		return
 	}
-	data, err := io.ReadAll(res.Body)
-	if err != nil {
-		return
-	}
-	c.client.debug("response: %#v", res)
-	c.client.debug("response body: %s", string(data))
-	c.client.debug("response status code: %d", res.StatusCode)
-	d := json.NewDecoder(bytes.NewBuffer(data))
+	defer res.Body.Close()
+	d := json.NewDecoder(res.Body)
 	err = d.Decode(&response)
 	return
 }

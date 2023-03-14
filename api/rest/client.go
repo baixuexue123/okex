@@ -145,7 +145,6 @@ func (c *ClientRest) Do(method, path string, private bool, params ...map[string]
 	if c.destination == okex.DemoServer {
 		r.Header.Add("x-simulated-trading", "1")
 	}
-	c.debug("request: %#v", r)
 	return c.client.Do(r)
 }
 

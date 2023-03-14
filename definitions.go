@@ -5,6 +5,7 @@ package okex
 
 import (
 	"encoding/json"
+	"fmt"
 	"strconv"
 	"strings"
 	"time"
@@ -299,7 +300,12 @@ const (
 	CandleStick1m  = CandleStickWsBarSize("candle1m")
 )
 
-func (t JSONTime) String() string { return time.Time(t).String() }
+func (t *JSONTime) String() string { return time.Time(*t).String() }
+
+func (t *JSONTime) MarshalJSON() ([]byte, error) {
+	ts := (*time.Time)(t).UnixMilli()
+	return json.Marshal(fmt.Sprintf("%d", ts))
+}
 
 func (t *JSONTime) UnmarshalJSON(s []byte) (err error) {
 	r := strings.Replace(string(s), `"`, ``, -1)

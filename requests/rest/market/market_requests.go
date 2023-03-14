@@ -6,7 +6,7 @@ type (
 	GetTickers struct {
 		Uly        string              `json:"uly,omitempty"`
 		InstType   okex.InstrumentType `json:"instType"`
-		InstFamily string              `json:"instFamily"`
+		InstFamily string              `json:"instFamily,omitempty"`
 	}
 	GetTicker struct {
 		InstID string `json:"instId"`

@@ -4,8 +4,12 @@ import "github.com/amir-the-h/okex"
 
 type (
 	GetTickers struct {
-		Uly      string              `json:"uly,omitempty"`
-		InstType okex.InstrumentType `json:"instType"`
+		Uly        string              `json:"uly,omitempty"`
+		InstType   okex.InstrumentType `json:"instType"`
+		InstFamily string              `json:"instFamily"`
+	}
+	GetTicker struct {
+		InstID string `json:"instId"`
 	}
 	GetIndexTickers struct {
 		InstID   string `json:"instId,omitempty"`

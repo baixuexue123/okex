@@ -41,7 +41,7 @@ func (c *Market) GetTickers(req requests.GetTickers) (response responses.Ticker,
 // Retrieve the latest price snapshot, best bid/ask price, and trading volume in the last 24 hours.
 //
 // https://www.okex.com/docs-v5/en/#rest-api-market-data-get-ticker
-func (c *Market) GetTicker(req requests.GetTickers) (response responses.Ticker, err error) {
+func (c *Market) GetTicker(req requests.GetTicker) (response responses.Ticker, err error) {
 	p := "/api/v5/market/ticker"
 	m := okex.S2M(req)
 	res, err := c.client.Do(http.MethodGet, p, false, m)
@@ -59,7 +59,7 @@ func (c *Market) GetTicker(req requests.GetTickers) (response responses.Ticker, 
 //
 // https://www.okex.com/docs-v5/en/#rest-api-market-data-get-index-tickers
 func (c *Market) GetIndexTickers(req requests.GetIndexTickers) (response responses.Ticker, err error) {
-	p := "/api/v5/market/ticker"
+	p := "/api/v5/market/index-tickers"
 	m := okex.S2M(req)
 	res, err := c.client.Do(http.MethodGet, p, false, m)
 	if err != nil {

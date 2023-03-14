@@ -33,6 +33,14 @@ type ClientRest struct {
 	destination okex.Destination
 	baseURL     okex.BaseURL
 	client      *http.Client
+	Debug       bool
+	Logger      *log.Logger
+}
+
+func (c *ClientRest) debug(format string, v ...interface{}) {
+	if c.Debug {
+		c.Logger.Printf(format, v...)
+	}
 }
 
 // NewClient returns a pointer to a fresh ClientRest
@@ -137,6 +145,7 @@ func (c *ClientRest) Do(method, path string, private bool, params ...map[string]
 	if c.destination == okex.DemoServer {
 		r.Header.Add("x-simulated-trading", "1")
 	}
+	c.debug("request: %#v", r)
 	return c.client.Do(r)
 }
 

@@ -67,19 +67,20 @@ type (
 		Amt   okex.JSONFloat64 `json:"amt"`
 	}
 	WithdrawalHistory struct {
-		Ccy   string               `json:"ccy"`
-		Chain string               `json:"chain"`
-		TxID  string               `json:"txId"`
-		From  string               `json:"from"`
-		To    string               `json:"to"`
-		Tag   string               `json:"tag,omitempty"`
-		PmtID string               `json:"pmtId,omitempty"`
-		Memo  string               `json:"memo,omitempty"`
-		Amt   okex.JSONFloat64     `json:"amt"`
-		Fee   okex.JSONInt64       `json:"fee"`
-		WdID  okex.JSONInt64       `json:"wdId"`
-		State okex.WithdrawalState `json:"state,string"`
-		TS    okex.JSONTime        `json:"ts"`
+		Ccy      string               `json:"ccy"`
+		Chain    string               `json:"chain"`
+		TxID     string               `json:"txId"`
+		From     string               `json:"from"`
+		To       string               `json:"to"`
+		Tag      string               `json:"tag,omitempty"`
+		PmtID    string               `json:"pmtId,omitempty"`
+		Memo     string               `json:"memo,omitempty"`
+		Amt      okex.JSONFloat64     `json:"amt"`
+		Fee      okex.JSONInt64       `json:"fee"`
+		WdID     okex.JSONInt64       `json:"wdId"`
+		ClientId string               `json:"clientId"`
+		State    okex.WithdrawalState `json:"state,string"`
+		TS       okex.JSONTime        `json:"ts"`
 	}
 	PiggyBank struct {
 		Ccy  string           `json:"ccy"`

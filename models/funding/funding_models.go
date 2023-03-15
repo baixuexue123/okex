@@ -76,7 +76,7 @@ type (
 		PmtID    string               `json:"pmtId,omitempty"`
 		Memo     string               `json:"memo,omitempty"`
 		Amt      okex.JSONFloat64     `json:"amt"`
-		Fee      okex.JSONInt64       `json:"fee"`
+		Fee      okex.JSONFloat64     `json:"fee"`
 		WdID     okex.JSONInt64       `json:"wdId"`
 		ClientId string               `json:"clientId"`
 		State    okex.WithdrawalState `json:"state,string"`

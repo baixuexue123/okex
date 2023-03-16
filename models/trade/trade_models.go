@@ -40,11 +40,11 @@ type (
 		FeeCcy      string              `json:"feeCcy"`
 		RebateCcy   string              `json:"rebateCcy"`
 		Px          okex.JSONFloat64    `json:"px"`
-		Sz          okex.JSONInt64      `json:"sz"`
+		Sz          okex.JSONFloat64    `json:"sz"`
 		Pnl         okex.JSONFloat64    `json:"pnl"`
-		AccFillSz   okex.JSONInt64      `json:"accFillSz"`
+		AccFillSz   okex.JSONFloat64    `json:"accFillSz"`
 		FillPx      okex.JSONFloat64    `json:"fillPx"`
-		FillSz      okex.JSONInt64      `json:"fillSz"`
+		FillSz      okex.JSONFloat64    `json:"fillSz"`
 		FillTime    okex.JSONFloat64    `json:"fillTime"`
 		AvgPx       okex.JSONFloat64    `json:"avgPx"`
 		Lever       okex.JSONFloat64    `json:"lever"`

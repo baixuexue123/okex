@@ -35,8 +35,7 @@ type ClientWs struct {
 	secretKey           []byte
 	passphrase          string
 	lastTransmit        map[bool]*time.Time
-	mu                  map[bool]*sync.Mutex
-	rmu                 map[bool]*sync.Mutex
+	mu                  map[bool]*sync.RWMutex
 	AuthRequested       *time.Time
 	Authorized          bool
 	Private             *Private
@@ -62,14 +61,13 @@ func NewClient(ctx context.Context, apiKey, secretKey, passphrase string, url ma
 		ctx:                 ctx,
 		Cancel:              cancel,
 		url:                 url,
-		sendChan:            map[bool]chan []byte{true: make(chan []byte), false: make(chan []byte)},
+		sendChan:            map[bool]chan []byte{true: make(chan []byte, 3), false: make(chan []byte, 3)},
 		DoneChan:            make(chan interface{}),
 		StructuredEventChan: make(chan interface{}),
 		RawEventChan:        make(chan *events.Basic),
 		conn:                make(map[bool]*websocket.Conn),
 		lastTransmit:        make(map[bool]*time.Time),
-		mu:                  map[bool]*sync.Mutex{true: {}, false: {}},
-		rmu:                 map[bool]*sync.Mutex{true: {}, false: {}},
+		mu:                  map[bool]*sync.RWMutex{true: {}, false: {}},
 	}
 	c.Private = NewPrivate(c)
 	c.Public = NewPublic(c)
@@ -107,7 +105,6 @@ func (c *ClientWs) Connect(p bool) error {
 //
 // https://www.okex.com/docs-v5/en/#websocket-api-login
 func (c *ClientWs) Login() error {
-	c.mu[true].Lock()
 	if c.Authorized {
 		return nil
 	}
@@ -116,7 +113,6 @@ func (c *ClientWs) Login() error {
 	}
 	now := time.Now()
 	c.AuthRequested = &now
-	c.mu[true].Unlock()
 	method := http.MethodGet
 	path := "/users/self/verify"
 	ts, sign := c.sign(method, path)
@@ -229,17 +225,13 @@ func (c *ClientWs) WaitForAuthorization() error {
 
 func (c *ClientWs) dial(p bool) error {
 	c.mu[p].Lock()
-	c.rmu[p].Lock()
-	defer func() {
-		c.mu[p].Unlock()
-		c.rmu[p].Unlock()
-	}()
 	conn, res, err := websocket.DefaultDialer.Dial(string(c.url[p]), nil)
 	if err != nil {
 		var statusCode int
 		if res != nil {
 			statusCode = res.StatusCode
 		}
+		c.mu[p].Unlock()
 		return fmt.Errorf("error %d: %w", statusCode, err)
 	}
 	defer res.Body.Close()
@@ -256,6 +248,7 @@ func (c *ClientWs) dial(p bool) error {
 		}
 	}()
 	c.conn[p] = conn
+	c.mu[p].Unlock()
 	return nil
 }
 func (c *ClientWs) sender(p bool) error {
@@ -264,35 +257,33 @@ func (c *ClientWs) sender(p bool) error {
 	for {
 		select {
 		case data := <-c.sendChan[p]:
-			c.mu[p].Lock()
+			c.mu[p].RLock()
 			err := c.conn[p].SetWriteDeadline(time.Now().Add(writeWait))
 			if err != nil {
-				c.mu[p].Unlock()
+				c.mu[p].RUnlock()
 				return err
 			}
 			w, err := c.conn[p].NextWriter(websocket.TextMessage)
 			if err != nil {
-				c.mu[p].Unlock()
+				c.mu[p].RUnlock()
 				return err
 			}
 			if _, err = w.Write(data); err != nil {
-				c.mu[p].Unlock()
+				c.mu[p].RUnlock()
 				return err
 			}
 			now := time.Now()
 			c.lastTransmit[p] = &now
-			c.mu[p].Unlock()
+			c.mu[p].RUnlock()
 			if err := w.Close(); err != nil {
 				return err
 			}
 		case <-ticker.C:
-			c.mu[p].Lock()
 			if c.conn[p] != nil && (c.lastTransmit[p] == nil || (c.lastTransmit[p] != nil && time.Since(*c.lastTransmit[p]) > PingPeriod)) {
 				go func() {
 					c.sendChan[p] <- []byte("ping")
 				}()
 			}
-			c.mu[p].Unlock()
 		case <-c.ctx.Done():
 			return c.handleCancel("sender")
 		}
@@ -304,21 +295,21 @@ func (c *ClientWs) receiver(p bool) error {
 		case <-c.ctx.Done():
 			return c.handleCancel("receiver")
 		default:
-			c.rmu[p].Lock()
+			c.mu[p].RLock()
 			err := c.conn[p].SetReadDeadline(time.Now().Add(pongWait))
 			if err != nil {
-				c.rmu[p].Unlock()
+				c.mu[p].RUnlock()
 				return err
 			}
 			mt, data, err := c.conn[p].ReadMessage()
 			if err != nil {
-				c.rmu[p].Unlock()
+				c.mu[p].RUnlock()
 				if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
 					return c.conn[p].Close()
 				}
 				return err
 			}
-			c.rmu[p].Unlock()
+			c.mu[p].RUnlock()
 			now := time.Now()
 			c.mu[p].Lock()
 			c.lastTransmit[p] = &now

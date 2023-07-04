@@ -1,6 +1,8 @@
 package responses
 
-type Basic struct {
-	Code string `json:"code"`
-	Msg  string `json:"msg"`
-}
+type (
+	Basic struct {
+		Code int    `json:"code,string"`
+		Msg  string `json:"msg,omitempty"`
+	}
+)

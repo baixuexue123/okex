@@ -43,6 +43,10 @@ func (c *ClientRest) debug(format string, v ...interface{}) {
 	}
 }
 
+func (c *ClientRest) ReplaceHttpClient(client *http.Client) {
+	c.client = client
+}
+
 // NewClient returns a pointer to a fresh ClientRest
 func NewClient(apiKey, secretKey, passphrase string, baseURL okex.BaseURL, destination okex.Destination) *ClientRest {
 	c := &ClientRest{

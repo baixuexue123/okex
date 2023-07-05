@@ -39,6 +39,8 @@ type (
 	ClosePosition struct {
 		InstID  string            `json:"instId"`
 		Ccy     string            `json:"ccy,omitempty"`
+		ClOrdID string            `json:"clOrdId,omitempty"`
+		Tag     string            `json:"tag,omitempty"`
 		PosSide okex.PositionSide `json:"posSide,omitempty"`
 		MgnMode okex.MarginMode   `json:"mgnMode"`
 	}

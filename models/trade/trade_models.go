@@ -6,24 +6,24 @@ import (
 
 type (
 	PlaceOrder struct {
-		ClOrdID string           `json:"clOrdId"`
-		Tag     string           `json:"tag"`
-		SMsg    string           `json:"sMsg"`
-		SCode   okex.JSONInt64   `json:"sCode"`
-		OrdID   okex.JSONFloat64 `json:"ordId"`
+		ClOrdID string `json:"clOrdId"`
+		Tag     string `json:"tag"`
+		SMsg    string `json:"sMsg"`
+		SCode   string `json:"sCode"`
+		OrdID   string `json:"ordId"`
 	}
 	CancelOrder struct {
-		OrdID   string           `json:"ordId"`
-		ClOrdID string           `json:"clOrdId"`
-		SMsg    string           `json:"sMsg"`
-		SCode   okex.JSONFloat64 `json:"sCode"`
+		OrdID   string `json:"ordId"`
+		ClOrdID string `json:"clOrdId"`
+		SMsg    string `json:"sMsg"`
+		SCode   string `json:"sCode"`
 	}
 	AmendOrder struct {
-		OrdID   string           `json:"ordId"`
-		ClOrdID string           `json:"clOrdId"`
-		ReqID   string           `json:"reqId"`
-		SMsg    string           `json:"sMsg"`
-		SCode   okex.JSONFloat64 `json:"sCode"`
+		OrdID   string `json:"ordId"`
+		ClOrdID string `json:"clOrdId"`
+		ReqID   string `json:"reqId"`
+		SMsg    string `json:"sMsg"`
+		SCode   string `json:"sCode"`
 	}
 	ClosePosition struct {
 		InstID  string            `json:"instId"`

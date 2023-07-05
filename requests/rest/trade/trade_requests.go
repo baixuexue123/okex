@@ -12,8 +12,8 @@ type (
 		ClOrdID    string            `json:"clOrdId,omitempty"`
 		Tag        string            `json:"tag,omitempty"`
 		ReduceOnly bool              `json:"reduceOnly,omitempty"`
-		Sz         float64           `json:"sz,string"`
-		Px         float64           `json:"px,omitempty,string"`
+		Sz         string            `json:"sz"`
+		Px         string            `json:"px,omitempty"`
 		TdMode     okex.TradeMode    `json:"tdMode"`
 		Side       okex.OrderSide    `json:"side"`
 		PosSide    okex.PositionSide `json:"posSide,omitempty"`
@@ -50,9 +50,9 @@ type (
 	OrderList struct {
 		Uly      string              `json:"uly,omitempty"`
 		InstID   string              `json:"instId,omitempty"`
-		After    float64             `json:"after,omitempty,string"`
-		Before   float64             `json:"before,omitempty,string"`
-		Limit    float64             `json:"limit,omitempty,string"`
+		After    string              `json:"after,omitempty"`
+		Before   string              `json:"before,omitempty"`
+		Limit    int64               `json:"limit,omitempty,string"`
 		InstType okex.InstrumentType `json:"instType,omitempty"`
 		OrdType  okex.OrderType      `json:"ordType,omitempty"`
 		State    okex.OrderState     `json:"state,omitempty"`
@@ -63,7 +63,7 @@ type (
 		OrdID    string              `json:"ordId,omitempty"`
 		After    float64             `json:"after,omitempty,string"`
 		Before   float64             `json:"before,omitempty,string"`
-		Limit    float64             `json:"limit,omitempty,string"`
+		Limit    int64               `json:"limit,omitempty,string"`
 		InstType okex.InstrumentType `json:"instType,omitempty"`
 	}
 	PlaceAlgoOrder struct {
@@ -111,7 +111,7 @@ type (
 		InstID   string              `json:"instId,omitempty"`
 		After    float64             `json:"after,omitempty,string"`
 		Before   float64             `json:"before,omitempty,string"`
-		Limit    float64             `json:"limit,omitempty,string"`
+		Limit    int64               `json:"limit,omitempty,string"`
 		OrdType  okex.AlgoOrderType  `json:"ordType,omitempty"`
 		State    okex.OrderState     `json:"state,omitempty"`
 	}

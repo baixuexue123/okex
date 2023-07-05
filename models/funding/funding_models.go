@@ -71,7 +71,7 @@ type (
 	Withdrawal struct {
 		Ccy   string           `json:"ccy"`
 		Chain string           `json:"chain"`
-		WdID  okex.JSONInt64   `json:"wdId"`
+		WdID  string           `json:"wdId"`
 		Amt   okex.JSONFloat64 `json:"amt"`
 	}
 	WithdrawalHistory struct {
@@ -85,7 +85,7 @@ type (
 		Memo     string               `json:"memo,omitempty"`
 		Amt      okex.JSONFloat64     `json:"amt"`
 		Fee      okex.JSONFloat64     `json:"fee"`
-		WdID     okex.JSONInt64       `json:"wdId"`
+		WdID     string               `json:"wdId"`
 		ClientId string               `json:"clientId"`
 		State    okex.WithdrawalState `json:"state,string"`
 		TS       okex.JSONTime        `json:"ts"`

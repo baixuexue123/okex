@@ -27,6 +27,7 @@ type (
 	}
 	GetDepositHistory struct {
 		Ccy    string            `json:"ccy,omitempty"`
+		DepId  string            `json:"depId,omitempty"`
 		TxID   string            `json:"txId,omitempty"`
 		After  int64             `json:"after,omitempty,string"`
 		Before int64             `json:"before,omitempty,string"`
@@ -34,21 +35,25 @@ type (
 		State  okex.DepositState `json:"state,omitempty,string"`
 	}
 	Withdrawal struct {
-		Ccy    string                     `json:"ccy"`
-		Chain  string                     `json:"chain,omitempty"`
-		ToAddr string                     `json:"toAddr"`
-		Pwd    string                     `json:"pwd"`
-		Amt    float64                    `json:"amt,string"`
-		Fee    float64                    `json:"fee,string"`
-		Dest   okex.WithdrawalDestination `json:"dest,string"`
+		Ccy      string                     `json:"ccy"`
+		Chain    string                     `json:"chain,omitempty"`
+		ToAddr   string                     `json:"toAddr"`
+		Pwd      string                     `json:"pwd"`
+		Amt      string                     `json:"amt"`
+		Fee      string                     `json:"fee"`
+		Dest     okex.WithdrawalDestination `json:"dest,string"`
+		ClientId string                     `json:"clientId,omitempty"`
 	}
 	GetWithdrawalHistory struct {
-		Ccy    string               `json:"ccy,omitempty"`
-		TxID   string               `json:"txId,omitempty"`
-		After  int64                `json:"after,omitempty,string"`
-		Before int64                `json:"before,omitempty,string"`
-		Limit  int64                `json:"limit,omitempty,string"`
-		State  okex.WithdrawalState `json:"state,omitempty,string"`
+		Ccy      string                     `json:"ccy,omitempty"`
+		WdId     string                     `json:"wdId,omitempty"`
+		ClientId string                     `json:"clientId,omitempty"`
+		TxID     string                     `json:"txId,omitempty"`
+		After    int64                      `json:"after,omitempty,string"`
+		Before   int64                      `json:"before,omitempty,string"`
+		Limit    int64                      `json:"limit,omitempty,string"`
+		State    okex.WithdrawalState       `json:"state,omitempty,string"`
+		Type     okex.WithdrawalDestination `json:"type,omitempty,string"`
 	}
 	PiggyBankPurchaseRedemption struct {
 		Ccy    string               `json:"ccy,omitempty"`

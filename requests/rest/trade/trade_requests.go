@@ -53,6 +53,8 @@ type (
 		After    string              `json:"after,omitempty"`
 		Before   string              `json:"before,omitempty"`
 		Limit    int64               `json:"limit,omitempty,string"`
+		Begin    int64               `json:"begin,omitempty,string"`
+		End      int64               `json:"end,omitempty,string"`
 		InstType okex.InstrumentType `json:"instType,omitempty"`
 		OrdType  okex.OrderType      `json:"ordType,omitempty"`
 		State    okex.OrderState     `json:"state,omitempty"`

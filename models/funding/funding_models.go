@@ -9,6 +9,7 @@ type (
 		Chain             string `json:"chain"`
 		MinDep            string `json:"minDep"`
 		MinWd             string `json:"minWd"`
+		MaxWd             string `json:"maxWd"`
 		MinFee            string `json:"minFee"`
 		MaxFee            string `json:"maxFee"`
 		MinFeeForCtAddr   string `json:"minFeeForCtAddr"`

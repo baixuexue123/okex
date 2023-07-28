@@ -4,26 +4,30 @@ import "github.com/amir-the-h/okex"
 
 type (
 	Currency struct {
-		Ccy               string `json:"ccy"`
-		Name              string `json:"name"`
-		Chain             string `json:"chain"`
-		MinDep            string `json:"minDep"`
-		MinWd             string `json:"minWd"`
-		MaxWd             string `json:"maxWd"`
-		MinFee            string `json:"minFee"`
-		MaxFee            string `json:"maxFee"`
-		MinFeeForCtAddr   string `json:"minFeeForCtAddr"`
-		MaxFeeForCtAddr   string `json:"maxFeeForCtAddr"`
-		CanDep            bool   `json:"canDep"`
-		CanWd             bool   `json:"canWd"`
-		CanInternal       bool   `json:"canInternal"`
-		WdTickSz          string `json:"wdTickSz"`
-		WdQuota           string `json:"wdQuota"`
-		UsedWdQuota       string `json:"usedWdQuota"`
-		DepQuotaFixed     string `json:"depQuotaFixed"`
-		UsedDepQuotaFixed string `json:"usedDepQuotaFixed"`
-		NeedTag           string `json:"needTag"`
-		MainNet           bool   `json:"mainNet"`
+		Ccy                  string `json:"ccy"`
+		Name                 string `json:"name"`
+		Chain                string `json:"chain"`
+		CanDep               bool   `json:"canDep"`
+		CanWd                bool   `json:"canWd"`
+		CanInternal          bool   `json:"canInternal"`
+		MinDep               string `json:"minDep"`
+		MinWd                string `json:"minWd"`
+		MaxWd                string `json:"maxWd"`
+		WdTickSz             string `json:"wdTickSz"`
+		WdQuota              string `json:"wdQuota"`
+		UsedWdQuota          string `json:"usedWdQuota"`
+		MinFee               string `json:"minFee"`
+		MaxFee               string `json:"maxFee"`
+		MinFeeForCtAddr      string `json:"minFeeForCtAddr"`
+		MaxFeeForCtAddr      string `json:"maxFeeForCtAddr"`
+		MinDepArrivalConfirm string `json:"minDepArrivalConfirm"`
+		MinWdUnlockConfirm   string `json:"minWdUnlockConfirm"`
+		DepQuotaFixed        string `json:"depQuotaFixed"`
+		UsedDepQuotaFixed    string `json:"usedDepQuotaFixed"`
+		DepQuoteDailyLayer2  string `json:"depQuoteDailyLayer2"`
+		NeedTag              bool   `json:"needTag"`
+		MainNet              bool   `json:"mainNet"`
+		LogoLink             string `json:"logoLink"`
 	}
 	Balance struct {
 		Ccy       string `json:"ccy"`

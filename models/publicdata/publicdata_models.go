@@ -18,6 +18,8 @@ type (
 		TickSz    okex.JSONFloat64     `json:"tickSz,omitempty"`
 		LotSz     okex.JSONFloat64     `json:"lotSz,omitempty"`
 		MinSz     okex.JSONFloat64     `json:"minSz,omitempty"`
+		MaxLmtSz  okex.JSONFloat64     `json:"maxLmtSz,omitempty"`
+		MaxMktSz  okex.JSONFloat64     `json:"maxMktSz,omitempty"`
 		Lever     okex.JSONFloat64     `json:"lever"`
 		InstType  okex.InstrumentType  `json:"instType"`
 		Category  okex.FeeCategory     `json:"category,string"`
